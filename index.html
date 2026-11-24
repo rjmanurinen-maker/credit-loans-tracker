@@ -1512,7 +1512,7 @@ async function giveFile(filename,data){
   openExport(data,filename);
 }
 function openRestore(){
-  showModal('<h2>Restore from backup</h2><p class="muted small">Paste the text of a backup file. This replaces all accounts and payments currently here.</p><textarea class="code" id="rtext" placeholder="Paste backup text"></textarea><div class="err" id="merr"></div><div class="row"><button class="btn warn" data-a="rgo">Replace everything</button><button class="btn" data-a="mclose">Cancel</button></div>');
+  showModal('<h2>Restore from backup</h2><p class="muted small">Choose a backup file (the .json you saved with Save backup). This replaces all accounts and payments currently here.</p><label class="btn" style="cursor:pointer;justify-content:center;text-align:center">Choose backup file<input type="file" id="rfile" accept=".json,application/json,text/plain" hidden></label><div class="small muted" id="rname"></div><textarea class="code" id="rtext" placeholder="...or paste the backup text here"></textarea><div class="err" id="merr"></div><div class="row"><button class="btn warn" data-a="rgo">Replace everything</button><button class="btn" data-a="mclose">Cancel</button></div>');
 }
 function restoreGo(){
   let o=null;try{o=JSON.parse(mval('rtext'))}catch(e){}
@@ -1745,4 +1745,5 @@ This typically indicates that your device does not have a healthy Internet conne
   F.onAuth(function(u){if(u)enter(u);else login()});
 })();
 </script>
+<script>document.addEventListener('change',function(e){var t=e.target;if(!t||t.id!=='rfile'||!t.files||!t.files[0])return;var f=t.files[0],r=new FileReader();r.onload=function(){var x=document.getElementById('rtext'),n=document.getElementById('rname'),m=document.getElementById('merr');if(x)x.value=String(r.result||'');if(n)n.textContent='Loaded: '+f.name+'. Press Replace everything to restore it.';if(m)m.textContent=''};r.onerror=function(){var m=document.getElementById('merr');if(m)m.textContent='Could not read that file.'};r.readAsText(f)});</script>
 </body></html>
